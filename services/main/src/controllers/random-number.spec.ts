@@ -48,9 +48,13 @@ describe('AppController', () => {
   describe('storeRandomNumber', () => {
     it('should return random number object with id and random number', async () => {
       // tslint:disable-next-line:max-line-length
-      jest.spyOn(rabbitMqService, 'send').mockImplementation(() => Promise.resolve(FAKE_RANDOM_NUMBER_RESPONSE.randomNumber));
+      jest
+        .spyOn(rabbitMqService, 'send')
+        .mockImplementation(() => Promise.resolve(FAKE_RANDOM_NUMBER_RESPONSE.randomNumber));
       // tslint:disable-next-line:no-shadowed-variable max-line-length
-      jest.spyOn(appService, 'storeRandomNumber').mockImplementation((FAKE_RANDOM_NUMBER) => Promise.resolve(FAKE_RANDOM_NUMBER_RESPONSE));
+      jest
+        .spyOn(appService, 'storeRandomNumber')
+        .mockImplementation(FAKE_RANDOM_NUMBER => Promise.resolve(FAKE_RANDOM_NUMBER_RESPONSE));
       // assuming you would have some findAll function in your rabbitMqService service
       expect(await appController.storeRandomNumber()).toBe(FAKE_RANDOM_NUMBER_RESPONSE);
     });
