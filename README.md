@@ -58,7 +58,7 @@ There are corresponding scripts in the top-level `package.json` to spin up Docke
 
 Running DB migrations will set up the tables in your local DB populate some tables with application data.
 
-From the backend directory, execute `yarn db:run`
+From the roulette directory, execute `yarn db:run`
 
 Note: May take a few minutes to run while the `SSL is off. reason: undefined file not exists` message is shown.
 
