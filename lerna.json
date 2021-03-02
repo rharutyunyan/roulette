@@ -1,0 +1,12 @@
+{
+  "packages": [
+    "common",
+    "database",
+    "services/*"
+  ],
+  "version": "independent",
+  "stream": true,
+  "hoist": true,
+  "useWorkspaces": true,
+  "npmClient": "yarn"
+}

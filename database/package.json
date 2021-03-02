@@ -1,0 +1,14 @@
+{
+  "name": "@roulette/database",
+  "version": "1.0.0",
+  "description": "Database ORM config module for running migrations",
+  "author": "Radik Harutyunyan",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf dist",
+    "typeorm": "ts-node -r tsconfig-paths/register ../node_modules/typeorm/cli.js --config src/ormconfig.ts",
+    "typeorm:generate": "yarn typeorm migration:generate",
+    "typeorm:create": "yarn typeorm migration:create",
+    "typeorm:run": "yarn typeorm migration:run"
+  }
+}

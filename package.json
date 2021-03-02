@@ -1,0 +1,87 @@
+{
+  "name": "root",
+  "version": "0.0.1",
+  "description": "@todo: description",
+  "author": "Radik Harutyunyan",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "common",
+    "database",
+    "services/*",
+    "services/random-number-generator/*"
+  ],
+  "scripts": {
+    "clean": "lerna clean",
+    "clean:build": "lerna run clean",
+    "format": "lerna run format",
+    "ls": "lerna ls",
+    "lint": "lerna run lint",
+    "test:main": "lerna run test --scope=@roulette/main",
+    "build": "lerna run build",
+    "build:common": "lerna run build --scope=@roulette/common",
+    "build:main": "lerna run build --scope=@roulette/main",
+    "build:random-number-generator": "lerna run build --scope=@roulette/random-number-generator",
+    "start:common": "lerna run start --scope=@roulette/common",
+    "start:main:dev": "lerna run start:dev --scope=@roulette/main",
+    "start:random-number-generator:dev": "lerna run start:dev --scope=@roulette/random-number-generator",
+    "start:app:dev": "docker-compose -f docker-compose.yml up -d && yarn start:common",
+    "stop": "docker-compose down --remove-orphans",
+    "db:run": "lerna run typeorm:run --scope=@roulette/database",
+    "db:migration:generate": "lerna run typeorm:generate --scope=@roulette/database -- -n",
+    "db:migration:create": "lerna run typeorm:create --scope=@roulette/database -- -n"
+  },
+  "dependencies": {
+    "@nestjs/common": "^7.6.13",
+    "@nestjs/config": "^0.6.3",
+    "@nestjs/core": "^7.6.13",
+    "@nestjs/microservices": "^7.6.13",
+    "@nestjs/platform-express": "~7.6.13",
+    "@nestjs/swagger": "~4.7.12",
+    "@nestjs/typeorm": "^7.1.5",
+    "amqp-connection-manager": "^3.2.2",
+    "amqplib": "^0.7.0",
+    "class-transformer": "~0.3.2",
+    "class-validator": "~0.13.1",
+    "pg": "^8.5.1",
+    "random-int": "^2.0.1",
+    "reflect-metadata": "~0.1.12",
+    "rimraf": "~2.6.2",
+    "rxjs": "~6.3.3",
+    "swagger-ui-express": "~4.1.6",
+    "typeorm": "^0.2.31"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "~7.6.13",
+    "@types/express": "4.16.1",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.4",
+    "@types/supertest": "2.0.7",
+    "eslint-config-prettier": "~7.2.0",
+    "eslint-plugin-prettier": "~3.3.1",
+    "husky": "~5.0.9",
+    "jest": "24.7.1",
+    "lerna": "^3.22.1",
+    "lint-staged": "~10.5.4",
+    "prettier": "1.17.0",
+    "supertest": "4.0.2",
+    "ts-jest": "24.0.2",
+    "ts-node": "8.1.0",
+    "tsc-watch": "2.2.1",
+    "tsconfig-paths": "3.8.0",
+    "tslint": "5.16.0",
+    "typescript": "4.1.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(ts)": [
+      "yarn lint",
+      "yarn format",
+      "git add"
+    ]
+  }
+}

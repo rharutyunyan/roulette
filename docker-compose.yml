@@ -1,0 +1,85 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: roulette_postgres
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test:
+        [
+            'CMD-SHELL',
+            'psql postgres://$${APP_POSTGRES_USER}:$${APP_POSTGRES_PASSWORD}@localhost:5432/$${APP_POSTGRES_DB} || exit 1',
+        ]
+    environment:
+      POSTGRES_DB: roulette
+      APP_POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: 'admin'
+      RABBITMQ_DEFAULT_PASS: 'admin'
+
+  main:
+    image: node:14-alpine
+    container_name: main
+    environment:
+      APP_POSTGRES_HOST: roulette_postgres
+      APP_POSTGRES_DB: roulette
+      APP_POSTGRES_USER: postgres
+      APP_POSTGRES_PASSWORD:
+      APP_POSTGRES_PORT:
+      APP_POSTGRES_SSL_CA:
+      APP_ENVIRONMENT: Development
+      APP_ROOT_URL: http://localhost:3000
+      APP_PORT: 3000
+      APP_SWAGGER_NAME:
+      APP_SWAGGER_DESCRIPTION:
+      APP_SWAGGER_VERSION:
+      APP_SWAGGER_PATH:
+      APP_GLOBAL_PREFIX:
+      APP_RABBITMQ_USER: admin
+      APP_RABBITMQ_PASSWORD: admin
+      APP_RABBITMQ_HOST: rabbitmq:5672
+      APP_RABBITMQ_QUEUE_NAME: 'random-number-generator'
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/backend:delegated
+    working_dir: /usr/src/backend
+    command: yarn start:main:dev
+    ports:
+      - '3000:3000'
+
+  random-number-generator:
+    image: node:14-alpine
+    container_name: random_number_generator
+    environment:
+      APP_PORT: '3002'
+      APP_RABBITMQ_USER: admin
+      APP_RABBITMQ_PASSWORD: admin
+      APP_RABBITMQ_HOST: rabbitmq:5672
+      APP_RABBITMQ_QUEUE_NAME: 'random-number-generator'
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/backend:delegated
+    working_dir: /usr/src/backend
+    command: yarn start:random-number-generator:dev
+    ports:
+      - '3002:3002'
+
+volumes:
+  postgres_data:
+  rabbitmq_data:

@@ -1,0 +1,37 @@
+{
+  "name": "@roulette/common",
+  "version": "1.0.0",
+  "description": "@todo: description",
+  "author": "Radik Harutyunyan",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "rimraf lib && tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "tsc -w -p tsconfig.build.json",
+    "lint": "tslint -p tsconfig.build.json -c tslint.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1"
+  },
+  "types": "./lib",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

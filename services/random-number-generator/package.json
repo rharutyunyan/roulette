@@ -1,0 +1,39 @@
+{
+  "name": "@roulette/random-number-generator",
+  "version": "1.0.0",
+  "description": "@todo: description",
+  "author": "Radik Harutyunyan",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "rimraf lib && tsc -p tsconfig.build.json",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"ts-node -r tsconfig-paths/register src/main.ts\"",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.build.json -c tslint.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@nestjs/microservices": "~7.6.13",
+    "@roulette/common": "^1.0.0"
+  },
+  "types": "./lib",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

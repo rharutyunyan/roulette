@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "preserveSymlinks": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@roulette/common/*": ["@roulette/common/lib/*"]
+    },
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "dist/**/*", "test/**/*"]
+}
